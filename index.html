@@ -25,6 +25,17 @@
             align-items: center;
         }
 
+        /* Estilo para el título principal */
+        .main-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 15px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
         .header-img {
             width: 100%;
             max-width: 500px;
@@ -46,6 +57,7 @@
             font-size: 16px;
             font-weight: 700;
             outline: none;
+            background-color: white;
         }
 
         .ejercicio-card {
@@ -59,9 +71,15 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
+        /* Estilo especial para la tarjeta de cardio */
+        .ejercicio-card.cardio-card {
+            border: 2px solid #ddd;
+            background-color: #f0f0f0;
+        }
+
         .img-container {
             width: 100%;
-            height: 150px; /* Ajustado para las ilustraciones */
+            height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -74,7 +92,7 @@
         .img-container img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* Para no deformar la ilustración */
+            object-fit: contain;
         }
 
         .ej-name {
@@ -138,15 +156,27 @@
             border-color: var(--accent);
         }
 
+        /* Estilo para el temporizador grande de cardio */
+        .timer-display.cardio-timer {
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
         #dia-titulo {
             font-weight: 900;
             font-size: 22px;
             margin-bottom: 15px;
             color: var(--accent);
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
+
+    <h1 class="main-title">RUTINA SEMANAL</h1>
 
     <img src="rutina.jpg" class="header-img" alt="Calendario">
 
@@ -168,26 +198,26 @@
     <script>
         const datos = {
             lunes: [
-                { n: "Press Manc. Plano", s: 4, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bench-Press_13090f67-ccfc-4f3a-9bab-e75d753fa9fa_600x600.png?v=1612137970" },
+                { n: "Press Plano", s: 4, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bench-Press_13090f67-ccfc-4f3a-9bab-e75d753fa9fa_600x600.png?v=1612137970" },
                 { n: "Press Inclinado", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Incline-Dumbbell-Bench-Press_c2bf89a2-433f-4a8f-9801-67c679980867_600x600.png?v=1612138008" },
                 { n: "Aperturas", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Peck-Deck_600x600.png?v=1612137910" },
-                { n: "Press Militar Manc.", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Shoulder-Press_da0aa742-620a-45f7-9277-78137d38ff28_600x600.png?v=1612138495" },
-                { n: "Elev. Laterales", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Lateral-Raise_31c81eee-81c4-4ffe-890d-ee13dd5bbf20_600x600.png?v=1612138523" },
-                { n: "Tríceps Polea", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Single-Arm-Cable-Triceps-Extension_600x600.png?v=1619978169" }
+                { n: "Press Militar", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Shoulder-Press_da0aa742-620a-45f7-9277-78137d38ff28_600x600.png?v=1612138495" },
+                { n: "Elevaciones Laterales", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Lateral-Raise_31c81eee-81c4-4ffe-890d-ee13dd5bbf20_600x600.png?v=1612138523" },
+                { n: "Tríceps en Polea", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Single-Arm-Cable-Triceps-Extension_600x600.png?v=1619978169" }
             ],
             martes: [
-                { n: "Sentadilla Máquina", s: 4, d: 120, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Hack-Squat_044b3d09-ffa7-4728-b56f-f4fb3c175548_600x600.png?v=1612139060" },
+                { n: "Sentadilla Hack", s: 4, d: 120, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Hack-Squat_044b3d09-ffa7-4728-b56f-f4fb3c175548_600x600.png?v=1612139060" },
                 { n: "Prensa", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Leg-Press_f7febd5c-75e5-42f4-9bb4-c938969ce293_600x600.png?v=1612138836" },
                 { n: "Curl Femoral", s: 3, d: 75, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Lying-Leg-Curl_203153d8-79dd-4bb9-9125-708aa4327107_600x600.png?v=1612139013" },
-                { n: "Abductores Máquina", s: 3, d: 60, img: "https://static.strengthlevel.com/images/exercises/hip-abduction/hip-abduction-800.jpg" },
-                { n: "Talones", s: 4, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Standing-Calf-Raise_61746b47-98aa-49ee-bb97-5a19562592b9_600x600.png?v=1612137090" }
+                { n: "Abductores", s: 3, d: 60, img: "https://static.strengthlevel.com/images/exercises/hip-abduction/hip-abduction-800.jpg" },
+                { n: "Elevación de Talones", s: 4, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Standing-Calf-Raise_61746b47-98aa-49ee-bb97-5a19562592b9_600x600.png?v=1612137090" }
             ],
             miercoles: [
                 { n: "Jalón al Pecho", s: 4, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Close-Grip-Pulldown_072bb5ce-e3d9-4007-b8d2-d343e9d1051b_600x600.png?v=1612138178" },
-                { n: "Remo Mancuerna", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bent-Over-Row-_Single-Arm_49867db3-f465-4fbc-b359-29cbdda502e2_600x600.png?v=1612138069" },
+                { n: "Remo 1 Brazo", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bent-Over-Row-_Single-Arm_49867db3-f465-4fbc-b359-29cbdda502e2_600x600.png?v=1612138069" },
                 { n: "Remo Máquina", s: 3, d: 75, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Seated-Cable-Row_9470fa48-f0d1-40b1-a980-caee9e6f2e53_600x600.png?v=1612138127" },
-                { n: "Face Pull", s: 3, d: 60, img: "https://liftmanual.com/wp-content/uploads/2023/04/cable-standing-face-pull.jpg" },
-                { n: "Curl Bíceps Manc.", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Alternating-Dumbbell-Curl_ad879dc4-b4fb-4ca7-b2b1-6e1eb5d78252_600x600.png?v=1612137169" },
+                { n: "Face Pull Polea", s: 3, d: 60, img: "https://liftmanual.com/wp-content/uploads/2023/04/cable-standing-face-pull.jpg" },
+                { n: "Curl Bíceps", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Alternating-Dumbbell-Curl_ad879dc4-b4fb-4ca7-b2b1-6e1eb5d78252_600x600.png?v=1612137169" },
                 { n: "Curl Martillo", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Hammer-Curl_da9fea8b-fc81-4a4f-9af1-aea1b85239d7_600x600.png?v=1612137282" }
             ]
         };
@@ -201,35 +231,72 @@
             const dia = e.target.value;
             if(!dia) { content.innerHTML = ""; titulo.innerText = ""; return; }
             titulo.innerText = dia.toUpperCase();
-            const fuente = (dia === 'jueves') ? datos.lunes : (dia === 'viernes' ? datos.martes : (dia === 'sabado' ? datos.miercoles : datos[dia]));
             
-            content.innerHTML = fuente.map((ej, eIdx) => `
-                <div class="ejercicio-card">
+            // Determinar la fuente de datos
+            const fuenteBase = (dia === 'jueves') ? datos.lunes : (dia === 'viernes' ? datos.martes : (dia === 'sabado' ? datos.miercoles : datos[dia]));
+            
+            // Clonar la fuente base para no modificar los datos originales
+            const fuenteConCardio = [...fuenteBase];
+            
+            // Añadir el Cardio al final (Etapa Final del Proceso)
+            fuenteConCardio.push({
+                n: "Etapa Final: Cardio (Bicicleta)",
+                s: 1, // Una sola serie
+                d: 1800, // 30 minutos = 1800 segundos
+                img: "https://img.freepik.com/vector-premium/icono-bicicleta-gimnasio-estatico_1120558-43247.jpg?semt=ais_hybrid&w=740&q=80",
+                esCardio: true // Bandera para estilo especial
+            });
+            
+            content.innerHTML = fuenteConCardio.map((ej, eIdx) => {
+                const esCardio = ej.esCardio || false;
+                const cardClass = esCardio ? 'ejercicio-card cardio-card' : 'ejercicio-card';
+                
+                return `
+                <div class="${cardClass}">
                     <div class="img-container"><img src="${ej.img}" alt="${ej.n}"></div>
                     <span class="ej-name">${ej.n}</span>
-                    <div class="series-container">
+                    <div class="series-container" style="${esCardio ? 'display:flex; justify-content:center;' : ''}">
                         ${Array.from({length: ej.s}).map((_, sIdx) => {
                             const tId = `t-${eIdx}-${sIdx}`;
-                            return `
-                            <div class="serie-pill">
-                                <span class="serie-num">SERIE ${sIdx+1}</span>
-                                <button class="btn-check" onclick="this.classList.toggle('active')"><i class="fa-solid fa-check"></i></button>
-                                <div class="timer-display" id="${tId}" onclick="handleTimer(${ej.d}, '${tId}')">${ej.d}s</div>
-                            </div>`;
+                            const timerClass = esCardio ? 'timer-display cardio-timer' : 'timer-display';
+                            
+                            // Si es cardio, no mostramos el botón de check, solo el tiempo grande
+                            if (esCardio) {
+                                return `
+                                <div class="serie-pill" style="flex:1; max-width:200px;">
+                                    <span class="serie-num">OBJETIVO: 30 MIN</span>
+                                    <div class="${timerClass}" id="${tId}" onclick="handleTimer(${ej.d}, '${tId}', true)">${formatTime(ej.d)}</div>
+                                </div>`;
+                            } else {
+                                // Ejercicio normal con check y tiempo de descanso
+                                return `
+                                <div class="serie-pill">
+                                    <span class="serie-num">SERIE ${sIdx+1}</span>
+                                    <button class="btn-check" onclick="this.classList.toggle('active')"><i class="fa-solid fa-check"></i></button>
+                                    <div class="${timerClass}" id="${tId}" onclick="handleTimer(${ej.d}, '${tId}', false)">${ej.d}s</div>
+                                </div>`;
+                            }
                         }).join('')}
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         });
 
-        function handleTimer(duration, id) {
+        // Función auxiliar para formatear segundos a MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function handleTimer(duration, id, esCardio) {
             const el = document.getElementById(id);
             
             if (activeTimers[id]) {
                 clearInterval(activeTimers[id].interval);
                 delete activeTimers[id];
                 el.classList.remove('running');
-                el.innerText = duration + "s";
+                el.innerText = esCardio ? formatTime(duration) : duration + "s";
                 return;
             }
 
@@ -238,14 +305,28 @@
             
             const interval = setInterval(() => {
                 timeLeft--;
-                el.innerText = timeLeft + "s";
+                
+                // Actualizar visualización según el tipo
+                el.innerText = esCardio ? formatTime(timeLeft) : timeLeft + "s";
+                
                 if(timeLeft <= 0) {
                     clearInterval(interval);
                     delete activeTimers[id];
                     el.classList.remove('running');
-                    el.innerText = "¡LISTO!";
-                    if(navigator.vibrate) navigator.vibrate([200, 100, 200]);
-                    setTimeout(() => { el.innerText = duration + "s"; }, 3000);
+                    el.innerText = esCardio ? "¡COMPLETADO!" : "¡LISTO!";
+                    
+                    // Patrón de vibración más largo para el cardio
+                    if(navigator.vibrate) {
+                        if (esCardio) {
+                            navigator.vibrate([500, 200, 500, 200, 500]);
+                        } else {
+                            navigator.vibrate([200, 100, 200]);
+                        }
+                    }
+                    
+                    setTimeout(() => { 
+                        el.innerText = esCardio ? formatTime(duration) : duration + "s"; 
+                    }, esCardio ? 5000 : 3000); // Dar más tiempo para leer "COMPLETADO"
                 }
             }, 1000);
 
