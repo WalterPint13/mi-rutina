@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUTINA SEMANAL</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --success: #2ecc71;
+            --rest: #e74c3c;
+            --bg-body: #ecf0f1;
+            --bg-card: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--primary);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .rutina-imagen {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .select-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        select {
+            padding: 10px 15px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            border: 2px solid var(--accent);
+            background-color: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        #rutina-desplegada {
+            width: 100%;
+            max-width: 800px;
+            display: none; /* Oculto por defecto */
+        }
+
+        .dia-titulo {
+            text-align: center;
+            font-size: 2em;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .ejercicio-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .ejercicio-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .ejercicio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .ejercicio-nombre {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .ejercicio-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            background: #eee;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+
+        .series-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .serie-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .checkbox-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            cursor: pointer;
+        }
+
+        .btn-descanso {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .btn-descanso:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-descanso.running {
+            background-color: var(--rest);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8em; }
+            body { padding: 10px; }
+            .series-container { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>RUTINA SEMANAL</h1>
+
+    <img src="rutina.jpg" alt="Calendario de Rutina Semanal" class="rutina-imagen" onerror="this.style.display='none'; alert('No se encontró la imagen rutina.jpg. Guarda la imagen en la misma carpeta que este archivo HTML.')">
+
+    <div class="select-container">
+        <label for="dia-select">Selecciona el día:</label>
+        <select id="dia-select">
+            <option value="">-- Elige un día --</option>
+            <option value="lunes">Lunes (Push)</option>
+            <option value="martes">Martes (Legs)</option>
+            <option value="miercoles">Miércoles (Pull)</option>
+            <option value="jueves">Jueves (Push)</option>
+            <option value="viernes">Viernes (Legs)</option>
+            <option value="sabado">Sábado (Pull)</option>
+            <option value="domingo">Domingo (Descanso)</option>
+        </select>
+    </div>
+
+    <div id="rutina-desplegada">
+        <h2 id="dia-actual-titulo" class="dia-titulo"></h2>
+        <div id="ejercicios-lista">
+            </div>
+    </div>
+
+    <script>
+        // Datos de tu rutina
+        const rutinaDatos = {
+            lunes: [
+                { nombre: "Press con mancuernas plano", series: 4, reps: "8–12", descanso: 90 },
+                { nombre: "Press inclinado con mancuernas", series: 3, reps: "8–12", descanso: 90 },
+                { nombre: "Aperturas con mancuernas", series: 3, reps: "10–15", descanso: 60 },
+                { nombre: "Press militar con mancuernas", series: 3, reps: "8–12", descanso: 90 },
+                { nombre: "Elevaciones laterales", series: 3, reps: "12–15", descanso: 60 },
+                { nombre: "Tríceps en polea", series: 3, reps: "10–15", descanso: 60 }
+            ],
+            martes: [
+                { nombre: "Sentadilla en máquina", series: 4, reps: "8–12", descanso: 120 }, // Usando el max 120
+                { nombre: "Prensa de piernas", series: 3, reps: "10–15", descanso: 90 },
+                { nombre: "Curl femoral", series: 3, reps: "10–15", descanso: 75 },
+                { nombre: "Abductores en máquina", series: 3, reps: "12–20", descanso: 60 },
+                { nombre: "Elevaciones de talones", series: 4, reps: "12–20", descanso: 60 } // Usando max 60
+            ],
+            miercoles: [
+                { nombre: "Jalón al pecho", series: 4, reps: "8–12", descanso: 90 },
+                { nombre: "Remo con mancuerna", series: 3, reps: "8–12", descanso: 90 },
+                { nombre: "Remo en máquina", series: 3, reps: "10–12", descanso: 75 },
+                { nombre: "Face pull", series: 3, reps: "12–15", descanso: 60 },
+                { nombre: "Curl de bíceps", series: 3, reps: "8–12", descanso: 60 },
+                { nombre: "Curl martillo", series: 3, reps: "10–12", descanso: 60 }
+            ],
+            jueves: [], // Se copia de lunes en JS
+            viernes: [], // Se copia de martes en JS
+            sabado: [],  // Se copia de miercoles en JS
+            domingo: [{ nombre: "Descanso Total / Recuperación Activa", series: 0, reps: "-", descanso: 0, especial: true }]
+        };
+
+        // Clonar las rutinas repetidas
+        rutinaDatos.jueves = [...rutinaDatos.lunes];
+        rutinaDatos.viernes = [...rutinaDatos.martes];
+        rutinaDatos.sabado = [...rutinaDatos.miercoles];
+
+        const selectDia = document.getElementById('dia-select');
+        const containerRutina = document.getElementById('rutina-desplegada');
+        const tituloDia = document.getElementById('dia-actual-titulo');
+        const listaEjercicios = document.getElementById('ejercicios-lista');
+
+        selectDia.addEventListener('change', (e) => {
+            const diaSeleccionado = e.target.value;
+            if (diaSeleccionado) {
+                mostrarRutina(diaSeleccionado);
+            } else {
+                containerRutina.style.display = 'none';
+            }
+        });
+
+        function mostrarRutina(dia) {
+            tituloDia.textContent = dia;
+            listaEjercicios.innerHTML = ''; // Limpiar previo
+            containerRutina.style.display = 'block';
+
+            const ejercicios = rutinaDatos[dia];
+
+            if (ejercicios.length === 1 && ejercicios[0].especial) {
+                listaEjercicios.innerHTML = '<p style="text-align:center; font-size:1.2em;">¡Día de descanso! Disfruta tu recuperación.</p>';
+                return;
+            }
+
+            ejercicios.forEach((ej, indexEj) => {
+                const card = document.createElement('div');
+                card.className = 'ejercicio-card';
+
+                // HTML de la cabecera del ejercicio
+                let html = `
+                    <div class="ejercicio-header">
+                        <span class="ejercicio-nombre">${ej.nombre}</span>
+                        <span class="ejercicio-meta">${ej.series} series x ${ej.reps} (${ej.descanso}s)</span>
+                    </div>
+                    <div class="series-container">
+                `;
+
+                // Crear las series interactivas
+                for (let i = 1; i <= ej.series; i++) {
+                    const idUnico = `check-${dia}-${indexEj}-${i}`;
+                    const idTimer = `timer-${dia}-${indexEj}-${i}`;
+                    html += `
+                        <div class="serie-item">
+                            <input type="checkbox" id="${idUnico}">
+                            <label for="${idUnico}" class="checkbox-label">Serie ${i}</label>
+                            <button class="btn-descanso" id="${idTimer}" onclick="iniciarDescanso(${ej.descanso}, '${idTimer}')">Descanso</button>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`; // Cerrar series-container
+                card.innerHTML = html;
+                listaEjercicios.appendChild(card);
+            });
+        }
+
+        let totalSeconds;
+        let timerInterval;
+        let currentButton = null;
+
+        function iniciarDescanso(segundos, buttonId) {
+            const button = document.getElementById(buttonId);
+
+            // Si ya hay un temporizador corriendo en ESTE botón, pararlo.
+            if (currentButton === button) {
+                clearInterval(timerInterval);
+                resetButton(button);
+                currentButton = null;
+                return;
+            }
+
+            // Si hay un temporizador corriendo en OTRO botón, resetear ese primero
+            if (currentButton) {
+                clearInterval(timerInterval);
+                resetButton(currentButton);
+            }
+
+            currentButton = button;
+            totalSeconds = segundos;
+            
+            button.classList.add('running');
+            updateButtonText(button); // Update inicial
+
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    button.classList.remove('running');
+                    button.textContent = "¡LISTO!";
+                    
+                    // Sonido opcional (descomentar si quieres sonido)
+                    // new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
+                    
+                    setTimeout(() => resetButton(button), 2000); // Volver a "Descanso" tras 2s
+                    currentButton = null;
+                } else {
+                    updateButtonText(button);
+                }
+            }, 1000);
+        }
+
+        function updateButtonText(button) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const text = `Quedan ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            button.textContent = text;
+        }
+
+        function resetButton(button) {
+            button.textContent = "Descanso";
+            button.classList.remove('running');
+        }
+
+    </script>
+</body>
+</html>
