@@ -3,361 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUTINA SEMANAL</title>
+    <title>RUTINA SEMANAL - WALTER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --success: #2ecc71;
-            --rest: #e74c3c;
-            --bg-body: #ecf0f1;
-            --bg-card: #ffffff;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --primary: #121212;
+            --accent: #ff3e3e;
+            --success: #27ae60;
+            --bg: #ffffff;
+            --card-bg: #f8f9fa;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-body);
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
             color: var(--primary);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        h1 {
-            color: var(--primary);
+        .header-img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
             margin-bottom: 20px;
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        .rutina-imagen {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .select-container {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        label {
-            font-size: 1.2em;
-            margin-right: 10px;
-            font-weight: bold;
+        .select-wrapper {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
         }
 
         select {
-            padding: 10px 15px;
-            font-size: 1.1em;
-            border-radius: 5px;
-            border: 2px solid var(--accent);
-            background-color: white;
-            color: var(--primary);
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        #rutina-desplegada {
             width: 100%;
-            max-width: 800px;
-            display: none; /* Oculto por defecto */
-        }
-
-        .dia-titulo {
-            text-align: center;
-            font-size: 2em;
-            color: var(--accent);
-            margin-bottom: 20px;
-            text-transform: capitalize;
+            padding: 14px;
+            border-radius: 10px;
+            border: 2px solid #eee;
+            font-size: 16px;
+            font-weight: 700;
+            outline: none;
         }
 
         .ejercicio-card {
-            background-color: var(--bg-card);
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.2s;
-        }
-
-        .ejercicio-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .ejercicio-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            border-radius: 18px;
             margin-bottom: 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
-        .ejercicio-nombre {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--primary);
+        .img-container {
+            width: 100%;
+            height: 150px; /* Ajustado para las ilustraciones */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
         }
 
-        .ejercicio-meta {
-            font-size: 0.9em;
-            color: #7f8c8d;
-            background: #eee;
-            padding: 5px 10px;
-            border-radius: 15px;
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Para no deformar la ilustración */
+        }
+
+        .ej-name {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: block;
+            text-align: center;
         }
 
         .series-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .serie-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
             gap: 8px;
-            padding: 10px;
+        }
+
+        .serie-pill {
+            background: #fff;
             border: 1px solid #eee;
-            border-radius: 5px;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
         }
 
-        .checkbox-label {
-            font-size: 0.9em;
-            color: #7f8c8d;
+        .serie-num {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            color: #999;
+            margin-bottom: 4px;
         }
 
-        input[type="checkbox"] {
-            transform: scale(1.5);
+        .btn-check {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #eee;
+            background: #fff;
             cursor: pointer;
+            margin-bottom: 6px;
         }
 
-        .btn-descanso {
-            background-color: var(--accent);
+        .btn-check.active {
+            background: var(--success);
+            border-color: var(--success);
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+        }
+
+        .timer-display {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
             cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s;
-            width: 100%;
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid transparent;
         }
 
-        .btn-descanso:hover {
-            background-color: #2980b9;
+        .timer-display.running {
+            background: #ffebeb;
+            border-color: var(--accent);
         }
 
-        .btn-descanso.running {
-            background-color: var(--rest);
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8em; }
-            body { padding: 10px; }
-            .series-container { grid-template-columns: 1fr 1fr; }
+        #dia-titulo {
+            font-weight: 900;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
 
-    <h1>RUTINA SEMANAL</h1>
+    <img src="rutina.jpg" class="header-img" alt="Calendario">
 
-    <img src="rutina.jpg" alt="Calendario de Rutina Semanal" class="rutina-imagen" onerror="this.style.display='none'; alert('No se encontró la imagen rutina.jpg. Guarda la imagen en la misma carpeta que este archivo HTML.')">
-
-    <div class="select-container">
-        <label for="dia-select">Selecciona el día:</label>
-        <select id="dia-select">
-            <option value="">-- Elige un día --</option>
-            <option value="lunes">Lunes (Push)</option>
-            <option value="martes">Martes (Legs)</option>
-            <option value="miercoles">Miércoles (Pull)</option>
-            <option value="jueves">Jueves (Push)</option>
-            <option value="viernes">Viernes (Legs)</option>
-            <option value="sabado">Sábado (Pull)</option>
-            <option value="domingo">Domingo (Descanso)</option>
+    <div class="select-wrapper">
+        <select id="selector">
+            <option value="">SELECCIONA EL DÍA</option>
+            <option value="lunes">LUNES - PUSH</option>
+            <option value="martes">MARTES - LEGS</option>
+            <option value="miercoles">MIÉRCOLES - PULL</option>
+            <option value="jueves">JUEVES - PUSH</option>
+            <option value="viernes">VIERNES - LEGS</option>
+            <option value="sabado">SÁBADO - PULL</option>
         </select>
     </div>
 
-    <div id="rutina-desplegada">
-        <h2 id="dia-actual-titulo" class="dia-titulo"></h2>
-        <div id="ejercicios-lista">
-            </div>
-    </div>
+    <div id="dia-titulo"></div>
+    <div id="app-content" style="width:100%; display:flex; flex-direction:column; align-items:center;"></div>
 
     <script>
-        // Datos de tu rutina
-        const rutinaDatos = {
+        const datos = {
             lunes: [
-                { nombre: "Press con mancuernas plano", series: 4, reps: "8–12", descanso: 90 },
-                { nombre: "Press inclinado con mancuernas", series: 3, reps: "8–12", descanso: 90 },
-                { nombre: "Aperturas con mancuernas", series: 3, reps: "10–15", descanso: 60 },
-                { nombre: "Press militar con mancuernas", series: 3, reps: "8–12", descanso: 90 },
-                { nombre: "Elevaciones laterales", series: 3, reps: "12–15", descanso: 60 },
-                { nombre: "Tríceps en polea", series: 3, reps: "10–15", descanso: 60 }
+                { n: "Press Manc. Plano", s: 4, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bench-Press_13090f67-ccfc-4f3a-9bab-e75d753fa9fa_600x600.png?v=1612137970" },
+                { n: "Press Inclinado", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Incline-Dumbbell-Bench-Press_c2bf89a2-433f-4a8f-9801-67c679980867_600x600.png?v=1612138008" },
+                { n: "Aperturas", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Peck-Deck_600x600.png?v=1612137910" },
+                { n: "Press Militar Manc.", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Shoulder-Press_da0aa742-620a-45f7-9277-78137d38ff28_600x600.png?v=1612138495" },
+                { n: "Elev. Laterales", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Lateral-Raise_31c81eee-81c4-4ffe-890d-ee13dd5bbf20_600x600.png?v=1612138523" },
+                { n: "Tríceps Polea", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Single-Arm-Cable-Triceps-Extension_600x600.png?v=1619978169" }
             ],
             martes: [
-                { nombre: "Sentadilla en máquina", series: 4, reps: "8–12", descanso: 120 }, // Usando el max 120
-                { nombre: "Prensa de piernas", series: 3, reps: "10–15", descanso: 90 },
-                { nombre: "Curl femoral", series: 3, reps: "10–15", descanso: 75 },
-                { nombre: "Abductores en máquina", series: 3, reps: "12–20", descanso: 60 },
-                { nombre: "Elevaciones de talones", series: 4, reps: "12–20", descanso: 60 } // Usando max 60
+                { n: "Sentadilla Máquina", s: 4, d: 120, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Hack-Squat_044b3d09-ffa7-4728-b56f-f4fb3c175548_600x600.png?v=1612139060" },
+                { n: "Prensa", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Leg-Press_f7febd5c-75e5-42f4-9bb4-c938969ce293_600x600.png?v=1612138836" },
+                { n: "Curl Femoral", s: 3, d: 75, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Lying-Leg-Curl_203153d8-79dd-4bb9-9125-708aa4327107_600x600.png?v=1612139013" },
+                { n: "Abductores Máquina", s: 3, d: 60, img: "https://static.strengthlevel.com/images/exercises/hip-abduction/hip-abduction-800.jpg" },
+                { n: "Talones", s: 4, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Standing-Calf-Raise_61746b47-98aa-49ee-bb97-5a19562592b9_600x600.png?v=1612137090" }
             ],
             miercoles: [
-                { nombre: "Jalón al pecho", series: 4, reps: "8–12", descanso: 90 },
-                { nombre: "Remo con mancuerna", series: 3, reps: "8–12", descanso: 90 },
-                { nombre: "Remo en máquina", series: 3, reps: "10–12", descanso: 75 },
-                { nombre: "Face pull", series: 3, reps: "12–15", descanso: 60 },
-                { nombre: "Curl de bíceps", series: 3, reps: "8–12", descanso: 60 },
-                { nombre: "Curl martillo", series: 3, reps: "10–12", descanso: 60 }
-            ],
-            jueves: [], // Se copia de lunes en JS
-            viernes: [], // Se copia de martes en JS
-            sabado: [],  // Se copia de miercoles en JS
-            domingo: [{ nombre: "Descanso Total / Recuperación Activa", series: 0, reps: "-", descanso: 0, especial: true }]
+                { n: "Jalón al Pecho", s: 4, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Close-Grip-Pulldown_072bb5ce-e3d9-4007-b8d2-d343e9d1051b_600x600.png?v=1612138178" },
+                { n: "Remo Mancuerna", s: 3, d: 90, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Dumbbell-Bent-Over-Row-_Single-Arm_49867db3-f465-4fbc-b359-29cbdda502e2_600x600.png?v=1612138069" },
+                { n: "Remo Máquina", s: 3, d: 75, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Seated-Cable-Row_9470fa48-f0d1-40b1-a980-caee9e6f2e53_600x600.png?v=1612138127" },
+                { n: "Face Pull", s: 3, d: 60, img: "https://liftmanual.com/wp-content/uploads/2023/04/cable-standing-face-pull.jpg" },
+                { n: "Curl Bíceps Manc.", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Alternating-Dumbbell-Curl_ad879dc4-b4fb-4ca7-b2b1-6e1eb5d78252_600x600.png?v=1612137169" },
+                { n: "Curl Martillo", s: 3, d: 60, img: "https://cdn.shopify.com/s/files/1/0269/5551/3900/files/Hammer-Curl_da9fea8b-fc81-4a4f-9af1-aea1b85239d7_600x600.png?v=1612137282" }
+            ]
         };
 
-        // Clonar las rutinas repetidas
-        rutinaDatos.jueves = [...rutinaDatos.lunes];
-        rutinaDatos.viernes = [...rutinaDatos.martes];
-        rutinaDatos.sabado = [...rutinaDatos.miercoles];
+        const selector = document.getElementById('selector');
+        const content = document.getElementById('app-content');
+        const titulo = document.getElementById('dia-titulo');
+        let activeTimers = {};
 
-        const selectDia = document.getElementById('dia-select');
-        const containerRutina = document.getElementById('rutina-desplegada');
-        const tituloDia = document.getElementById('dia-actual-titulo');
-        const listaEjercicios = document.getElementById('ejercicios-lista');
-
-        selectDia.addEventListener('change', (e) => {
-            const diaSeleccionado = e.target.value;
-            if (diaSeleccionado) {
-                mostrarRutina(diaSeleccionado);
-            } else {
-                containerRutina.style.display = 'none';
-            }
+        selector.addEventListener('change', (e) => {
+            const dia = e.target.value;
+            if(!dia) { content.innerHTML = ""; titulo.innerText = ""; return; }
+            titulo.innerText = dia.toUpperCase();
+            const fuente = (dia === 'jueves') ? datos.lunes : (dia === 'viernes' ? datos.martes : (dia === 'sabado' ? datos.miercoles : datos[dia]));
+            
+            content.innerHTML = fuente.map((ej, eIdx) => `
+                <div class="ejercicio-card">
+                    <div class="img-container"><img src="${ej.img}" alt="${ej.n}"></div>
+                    <span class="ej-name">${ej.n}</span>
+                    <div class="series-container">
+                        ${Array.from({length: ej.s}).map((_, sIdx) => {
+                            const tId = `t-${eIdx}-${sIdx}`;
+                            return `
+                            <div class="serie-pill">
+                                <span class="serie-num">SERIE ${sIdx+1}</span>
+                                <button class="btn-check" onclick="this.classList.toggle('active')"><i class="fa-solid fa-check"></i></button>
+                                <div class="timer-display" id="${tId}" onclick="handleTimer(${ej.d}, '${tId}')">${ej.d}s</div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
         });
 
-        function mostrarRutina(dia) {
-            tituloDia.textContent = dia;
-            listaEjercicios.innerHTML = ''; // Limpiar previo
-            containerRutina.style.display = 'block';
-
-            const ejercicios = rutinaDatos[dia];
-
-            if (ejercicios.length === 1 && ejercicios[0].especial) {
-                listaEjercicios.innerHTML = '<p style="text-align:center; font-size:1.2em;">¡Día de descanso! Disfruta tu recuperación.</p>';
-                return;
-            }
-
-            ejercicios.forEach((ej, indexEj) => {
-                const card = document.createElement('div');
-                card.className = 'ejercicio-card';
-
-                // HTML de la cabecera del ejercicio
-                let html = `
-                    <div class="ejercicio-header">
-                        <span class="ejercicio-nombre">${ej.nombre}</span>
-                        <span class="ejercicio-meta">${ej.series} series x ${ej.reps} (${ej.descanso}s)</span>
-                    </div>
-                    <div class="series-container">
-                `;
-
-                // Crear las series interactivas
-                for (let i = 1; i <= ej.series; i++) {
-                    const idUnico = `check-${dia}-${indexEj}-${i}`;
-                    const idTimer = `timer-${dia}-${indexEj}-${i}`;
-                    html += `
-                        <div class="serie-item">
-                            <input type="checkbox" id="${idUnico}">
-                            <label for="${idUnico}" class="checkbox-label">Serie ${i}</label>
-                            <button class="btn-descanso" id="${idTimer}" onclick="iniciarDescanso(${ej.descanso}, '${idTimer}')">Descanso</button>
-                        </div>
-                    `;
-                }
-
-                html += `</div>`; // Cerrar series-container
-                card.innerHTML = html;
-                listaEjercicios.appendChild(card);
-            });
-        }
-
-        let totalSeconds;
-        let timerInterval;
-        let currentButton = null;
-
-        function iniciarDescanso(segundos, buttonId) {
-            const button = document.getElementById(buttonId);
-
-            // Si ya hay un temporizador corriendo en ESTE botón, pararlo.
-            if (currentButton === button) {
-                clearInterval(timerInterval);
-                resetButton(button);
-                currentButton = null;
-                return;
-            }
-
-            // Si hay un temporizador corriendo en OTRO botón, resetear ese primero
-            if (currentButton) {
-                clearInterval(timerInterval);
-                resetButton(currentButton);
-            }
-
-            currentButton = button;
-            totalSeconds = segundos;
+        function handleTimer(duration, id) {
+            const el = document.getElementById(id);
             
-            button.classList.add('running');
-            updateButtonText(button); // Update inicial
+            if (activeTimers[id]) {
+                clearInterval(activeTimers[id].interval);
+                delete activeTimers[id];
+                el.classList.remove('running');
+                el.innerText = duration + "s";
+                return;
+            }
 
-            timerInterval = setInterval(() => {
-                totalSeconds--;
-                if (totalSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    button.classList.remove('running');
-                    button.textContent = "¡LISTO!";
-                    
-                    // Sonido opcional (descomentar si quieres sonido)
-                    // new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
-                    
-                    setTimeout(() => resetButton(button), 2000); // Volver a "Descanso" tras 2s
-                    currentButton = null;
-                } else {
-                    updateButtonText(button);
+            let timeLeft = duration;
+            el.classList.add('running');
+            
+            const interval = setInterval(() => {
+                timeLeft--;
+                el.innerText = timeLeft + "s";
+                if(timeLeft <= 0) {
+                    clearInterval(interval);
+                    delete activeTimers[id];
+                    el.classList.remove('running');
+                    el.innerText = "¡LISTO!";
+                    if(navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                    setTimeout(() => { el.innerText = duration + "s"; }, 3000);
                 }
             }, 1000);
-        }
 
-        function updateButtonText(button) {
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            const text = `Quedan ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            button.textContent = text;
+            activeTimers[id] = { interval, timeLeft };
         }
-
-        function resetButton(button) {
-            button.textContent = "Descanso";
-            button.classList.remove('running');
-        }
-
     </script>
 </body>
 </html>
